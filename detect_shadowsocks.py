@@ -129,4 +129,4 @@ if len(results) > 10:
 
 for ip, num_package, num_hint, loss, loss_1, loss_2 in results:
     confidence = 1.0 - (loss - min_loss) / (max_loss - min_loss)
-    print('ip: ', ip, ' num_package: ', num_package, ' loss: ', loss, ' confidence: ', 100 * confidence, '%')
+    print('ip:', ip, 'num_package:', num_package, 'loss:', loss, 'confidence:', 100 * confidence, '%')

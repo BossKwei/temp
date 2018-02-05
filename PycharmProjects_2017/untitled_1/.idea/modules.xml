@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../graduation/.idea/graduation.iml" filepath="$PROJECT_DIR$/../graduation/.idea/graduation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../http/.idea/http.iml" filepath="$PROJECT_DIR$/../http/.idea/http.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../network/.idea/network.iml" filepath="$PROJECT_DIR$/../network/.idea/network.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../optim/.idea/optim.iml" filepath="$PROJECT_DIR$/../optim/.idea/optim.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../shadowsocks-naive/.idea/shadowsocks-naive.iml" filepath="$PROJECT_DIR$/../shadowsocks-naive/.idea/shadowsocks-naive.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../signal/.idea/signal.iml" filepath="$PROJECT_DIR$/../signal/.idea/signal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/untitled_1.iml" filepath="$PROJECT_DIR$/.idea/untitled_1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../visual/.idea/visual.iml" filepath="$PROJECT_DIR$/../visual/.idea/visual.iml" />
+    </modules>
+  </component>
+</project>

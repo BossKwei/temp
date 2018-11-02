@@ -1,0 +1,21 @@
+llvm-as 将人类可读的 .ll 文件汇编成字节代码
+llvm-dis 将字节代码文件反编成人类可读的 .ll 文件
+opt 在一个字节代码文件上运行一系列的 LLVM 到 LLVM 的优化
+llc 为一个字节代码文件生成本机器代码
+lli 直接运行使用 JIT 编译器或者解释器编译成字节代码的程序
+llvm-link 将几个字节代码文件连接成一个
+llvm-ar 打包字节代码文件
+llvm-ranlib 为 llvm-ar 打包的文件创建索引
+llvm-nm 在 打印出LLVM中间格式或者object文件的符号表（2014年5月14日更新）
+llvm-prof 将 'llvmprof.out' raw 数据格式化成人类可读的报告
+llvm-ld 带有可装载的运行时优化支持的通用目标连接器
+llvm-config 打印出配置时 LLVM 编译选项、库、等等
+llvmc 一个通用的可定制的编译器驱动
+llvm-diff 比较两个模块的结构
+bugpoint 自动案例测试减速器
+llvm-extract 从 LLVM 字节代码文件中解压出一个函数
+llvm-bcanalyzer 字节代码分析器 （分析二进制编码本身，而不是它代表的程序）
+FileCheck 灵活的文件验证器，广泛的被测试工具利用
+tblgen 目标描述阅读器和生成器
+lit        LLVM 集成测试器，用于运行测试
+AddressSanitizer  一个快速内存错误探测器

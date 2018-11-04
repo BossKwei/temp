@@ -1,0 +1,16 @@
+SelectionDAGISel::DoInstructionSelection
+    SelectionDAGISel::CodeGenAndEmitDAG
+        SelectionDAGISel::FinishBasicBlock(8 usages)
+        SelectionDAGISel::SelectAllBasicBlocks
+        SelectionDAGISel::SelectBasicBlock
+            SelectionDAGISel::SelectAllBasicBlocks(2 usages)
+                SelectionDAGISel::runOnMachineFunction
+                    HexagonDAGToDAGISel::runOnMachineFunction
+                        MachineFunctionPass::runOnFunction
+                            FPPassManager::runOnFunction
+                                CGPassManager::RunPassOnSCC
+                                FPPassManager::runOnModule
+                                    MPPassManager::runOnModule
+                                        PassManagerImpl::run
+                                            PassManager::run
+

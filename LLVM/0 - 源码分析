@@ -1,0 +1,31 @@
+Pass结构：
+1. 结构 Module -> Function -> BasicBlock -> Instruction
+2. 其都是 Value 类的派生，基类 Value 实现了一些基本的操作
+
+--------------------------------------------------
+打印指令：
+运算符重载函数 inline raw_ostream &operator<<(raw_ostream &OS, const Value &V) 在 include/llvm/IR/Value.h 中实现
+具体的指令集翻译打印在 lib/IR/ASMWriter.cpp 中实现
+
+--------------------------------------------------
+Target Independent Code Generator：
+1. 抽象目标机器描述（TargetMachine TargetLowering TargetRegisterInfo  TargetInstrInfo TargetFrameLowering TargetJITInfo），定义在 include/llvm/Target/ 中
+2. 生成的目标机器语言（MachineFunction MachineBasicBlock MachineInstr），定义在 include/llvm/CodeGen/ 中
+3. 描述汇编结构的 MC Layer 层，例如 label、section、instructions。跳转表和常量池在此处不存在
+4. 针对机器（目标相关）的代码生成算法，例如 寄存器分配、调度、stack frame representation，实现在 lib/CodeGen/ 中
+5. 使用 LLVM 组件实现目标描述接口，以及提供特定的针对目标机器的优化 Pass
+6. 针对机器实现 JIT 组件
+
+--------------------------------------------------
+TableGen：
+
+--------------------------------------------------
+Backend Basic Steps：
+1. 从 TargetMachine 派生出子类，描述特定机器的特征
+2. 描述寄存器、使用 TableGen 从文件 RegisterInfo.td 生成寄存器相关定义和字节对齐等信息。此外还要派生 TargetRegisterInfo 实现特定的子类，用于寄存器 allocation 和 interaction
+3. 描述指令集，使用 TableGen 从文件 TargetInstrFormats.td 和 TargetInstrInfo.td 生成指令。此外还要派生 TargetInstrInfo 子类表示目标机器支持的指令集
+？4. 将有向无环图（DAG）表示的 IR 转换成机器码
+？5. LLVM IR -> GAS
+
+
+

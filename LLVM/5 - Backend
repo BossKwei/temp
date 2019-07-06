@@ -1,0 +1,4 @@
+opt -load lib/LLVMHello.so main.bc -hello1 -time-passes
+
+Module -> Function -> BasicBlock -> Instruction
+

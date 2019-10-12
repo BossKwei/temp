@@ -16,12 +16,10 @@ def encode(x):
         end += b'e'
         return end
     elif type(x) == dict:
-        keys = list(x.keys())
-        # keys = sorted(list(x.keys()))
         end = b'd'
-        for i in keys:
-            end += encode(i)
-            end += encode(x[i])
+        for k, v in x.items():
+            end += encode(k)
+            end += encode(v)
         end += b'e'
         return end
     else:
@@ -29,45 +27,57 @@ def encode(x):
 
 
 class Decoder:
-    def __init__(self):
+    def __init__(self, x):
+        self.x = x
         self.idx = 0
+        self.size = len(self.x)
 
-    def decode(self, x):
+    def decode(self):
+        if not self.idx < self.size:
+            raise ValueError
+
         # int
-        if x[self.idx] == ord('i'):
+        if self.x[self.idx] == ord('i'):
             val = ''
             self.idx += 1
-            while x[self.idx] != ord('e'):
-                val += str(x[self.idx] - ord('0'))
+            while self.x[self.idx] != ord('e'):
+                val += str(self.x[self.idx] - ord('0'))
                 self.idx += 1
             self.idx += 1
             return int(val)
         # bytes
-        elif ord('0') <= x[self.idx] <= ord('9'):
+        elif ord('0') <= self.x[self.idx] <= ord('9'):
             val = ''
-            while x[self.idx] != ord(':'):
-                val += str(x[self.idx] - ord('0'))
+            while self.x[self.idx] != ord(':'):
+                val += str(self.x[self.idx] - ord('0'))
                 self.idx += 1
             length = int(val)
             self.idx += 1
-            res = x[self.idx:self.idx + length]
+            res = self.x[self.idx:self.idx + length]
             self.idx += length
             return res
         # list
-        elif x[self.idx] == ord('l'):
-            raise NotImplementedError
+        elif self.x[self.idx] == ord('l'):
+            l = list()
+            self.idx += 1
+            while self.x[self.idx] != ord('e'):
+                item = self.decode()
+                l.append(item)
+            self.idx += 1
+            return l
         # dict
-        elif x[self.idx] == ord('d'):
+        elif self.x[self.idx] == ord('d'):
             d = dict()
             self.idx += 1
-            while x[self.idx] != ord('e'):
-                key = self.decode(x)
-                value = self.decode(x)
+            while self.x[self.idx] != ord('e'):
+                key = self.decode()
+                value = self.decode()
                 d[key] = value
             self.idx += 1
             return d
         else:
             raise NotImplementedError
+
 
 def decode(x):
     """
@@ -76,5 +86,5 @@ def decode(x):
         2. str or list, when can not decode with utf-8 charset will try using this charset decoding. 
     return:
         object, unable decoding data will return bytes.
-    """ 
-    return Decoder().decode(x)
+    """
+    return Decoder(x).decode()

@@ -19,6 +19,13 @@ def test_bencoder():
     c = bencoder.decode(b)
     assert(c == a)
 
+    # list
+    a = [1, b'a']
+    b = bencoder.encode(a)
+    assert(b == b'li1e1:ae')
+    c = bencoder.decode(b)
+    assert(c == a)
+
     # dict
     a = {
         b't': b'pg',
@@ -35,14 +42,23 @@ def test_bencoder():
     print('test_bencoder() passed')
 
 
-def test_bencoder_heavy(n_iter):
+def test_bencoder_heavy(n_iter=1):
     def gen_int():
         return random.randrange(0xFFFFFFFF)
-    
+
     def gen_bytes():
         n = random.randrange(0xFF) + 1
         return os.urandom(n)
     
+    def gen_list():
+        l = list()
+        n = random.randrange(0xF) + 1
+        for _ in range(n):
+            func = random.choice([gen_int, gen_bytes])
+            item = func()
+            l.append(item)
+        return l
+
     def gen_dict(depth):
         d = dict()
         n = random.randrange(0xF) + 1
@@ -50,17 +66,18 @@ def test_bencoder_heavy(n_iter):
             if depth == 0:
                 func = random.choice([gen_int, gen_bytes])
                 key = func()
-                func = random.choice([gen_int, gen_bytes])
+                func = random.choice([gen_int, gen_bytes, gen_list])
                 value = func()
                 d[key] = value
             else:
                 func = random.choice([gen_int, gen_bytes])
                 key = func()
-                func = random.choice([gen_int, gen_bytes, lambda: gen_dict(depth - 1)])
+                func = random.choice(
+                    [gen_int, gen_bytes, gen_list, lambda: gen_dict(random.randrange(depth))])
                 value = func()
                 d[key] = value
         return d
-    
+
     for i in range(n_iter):
         depth = random.randrange(0xF)
         a = gen_dict(depth)
@@ -69,14 +86,25 @@ def test_bencoder_heavy(n_iter):
         c = bencoder.decode(b)
         assert(c == a)
         print('step {}: finished'.format(i))
-    
+
     print('test_bencoder_heavy() passed')
+
+
+def test_bencoder_secure():
+    a = b'abcdefg.1234567890'
+    b = b'l19:abcdefg.1234567890i123ee'
+    c = bencoder.decode(b)
+    print(c)
+    assert(c == a)
 
 
 def main():
     test_bencoder()
-    test_bencoder_heavy(2)
+    test_bencoder_heavy(1024)
+    # test_bencoder_secure()
 
 
 if __name__ == "__main__":
+    # import cProfile
+    # cProfile.run('main()')
     main()
